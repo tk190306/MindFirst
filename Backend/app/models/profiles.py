@@ -4,7 +4,7 @@ from sqlalchemy import Date
 from enum import Enum
 from uuid import UUID,uuid4
 from sqlalchemy import Boolean,DateTime,Enum as SQLEnum, ForeignKey,String
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 from app.core.database import Base
 
 class Gender(Enum):
@@ -28,3 +28,4 @@ class Profile(Base):
     created_at:Mapped[datetime]=mapped_column(DateTime(timezone=True),default=lambda: datetime.now(timezone.utc))
     updated_at:Mapped[datetime]=mapped_column(DateTime(timezone=True),default=lambda: datetime.now(timezone.utc),onupdate=lambda: datetime.now(timezone.utc))
     pronouns:Mapped[str | None]=mapped_column(String(255),nullable=True)
+    User=relationship("User",back_populates="profile")
