@@ -3,7 +3,7 @@ from enum import Enum
 from uuid import UUID, uuid4
 
 from sqlalchemy import DateTime, Enum as SQLEnum, ForeignKey,Text
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column,relationship
 
 from app.core.database import Base
 
@@ -22,3 +22,4 @@ class Message(Base):
     type:Mapped[MessageType]=mapped_column(SQLEnum(MessageType),nullable=False,default=MessageType.TEXT)
     created_at:Mapped[datetime]=mapped_column(DateTime(timezone=True),default=lambda: datetime.now(timezone.utc))
     updated_at:Mapped[datetime]=mapped_column(DateTime(timezone=True),default=lambda: datetime.now(timezone.utc),onupdate=lambda: datetime.now(timezone.utc))
+    Conversation=relationship("Conversation",back_populates="Messages")
