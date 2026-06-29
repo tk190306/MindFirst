@@ -1,3 +1,4 @@
-from app.core.database import engine
+from passlib.context import CryptContext
 
-print(engine)
+pwd = CryptContext(schemes=["bcrypt"], deprecated="auto")
+print(pwd.hash("Hello123!"))
