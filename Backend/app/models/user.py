@@ -20,6 +20,6 @@ class User(Base):
     is_active:Mapped[bool]=mapped_column(Boolean,default=True)
     created_at:Mapped[datetime]=mapped_column(DateTime(timezone=True),default=lambda: datetime.now(timezone.utc))
     updated_at:Mapped[datetime]=mapped_column(DateTime(timezone=True),default=lambda: datetime.now(timezone.utc),onupdate=lambda: datetime.now(timezone.utc))
-    profile=relationship("Profile",back_populates="user",uselist=False)
+    profiles=relationship("Profile",back_populates="User",uselist=False)
     conversations_as_user1=relationship("Conversation",foreign_keys="Conversation.user1_id",back_populates="User1")
     conversations_as_user2=relationship("Conversation",foreign_keys="Conversation.user2_id",back_populates="User2")

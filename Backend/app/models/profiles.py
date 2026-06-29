@@ -28,4 +28,4 @@ class Profile(Base):
     created_at:Mapped[datetime]=mapped_column(DateTime(timezone=True),default=lambda: datetime.now(timezone.utc))
     updated_at:Mapped[datetime]=mapped_column(DateTime(timezone=True),default=lambda: datetime.now(timezone.utc),onupdate=lambda: datetime.now(timezone.utc))
     pronouns:Mapped[str | None]=mapped_column(String(255),nullable=True)
-    User=relationship("User",back_populates="profile")
+    User=relationship("User",back_populates="profiles")

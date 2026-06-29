@@ -2,7 +2,6 @@ from datetime import datetime, timedelta, timezone
 from jose import jwt
 from passlib.context import CryptContext
 from app.core.config import settings
-from app.models.user import User
 from uuid import UUID
 
 pwd_context=CryptContext(schemes=["bcrypt"], deprecated="auto")
