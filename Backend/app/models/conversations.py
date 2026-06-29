@@ -15,11 +15,13 @@ class ConversationStatus(Enum):
 class Conversation(Base):
     __tablename__="conversations"
     __table_args__=(
-        CheckConstraint("used1_id <> used2_id", name="check_used1_used2_different"),
+        CheckConstraint("user1_id <> user2_id", name="check_user1_user2_different"),
     )
     id:Mapped[UUID]=mapped_column(primary_key=True, default=uuid4)
-    used1_id:Mapped[UUID]=mapped_column(ForeignKey("users.id"),nullable=False)
-    used2_id:Mapped[UUID]=mapped_column(ForeignKey("users.id"),nullable=False)
+    user1_id:Mapped[UUID]=mapped_column(ForeignKey("users.id"),nullable=False)
+    user2_id:Mapped[UUID]=mapped_column(ForeignKey("users.id"),nullable=False)
     status:Mapped[ConversationStatus]=mapped_column(SQLEnum(ConversationStatus),nullable=False,default=ConversationStatus.ACTIVE_ANONYMOUS)
     created_at:Mapped[datetime]=mapped_column(DateTime(timezone=True),default=lambda: datetime.now(timezone.utc))
     Messages=relationship("Message",back_populates="Conversation",cascade="all, delete-orphan")
+    User1=relationship("User",foreign_keys=[user1_id],back_populates="conversations_as_user1")
+    User2=relationship("User",foreign_keys=[user2_id],back_populates="conversations_as_user2")
